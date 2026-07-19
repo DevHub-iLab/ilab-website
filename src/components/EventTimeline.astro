@@ -1,0 +1,163 @@
+---
+// Upcoming events as a vertical timeline.
+// Edit the events in src/data/site.js — not here.
+import { events } from '../data/site';
+
+import { palette } from '../data/site';
+import { base } from '../utils.js';
+---
+
+<div class="timeline">
+  {
+    events.map((event, i) => (
+      <article
+        class:list={['event', { 'has-photo': !!event.image }]}
+        style={`--tint: ${palette[event.pillar]}; --bg: var(--bg-soft)`}
+      >
+        <div class="info">
+          <p class="date">
+            {event.date} · {event.time}
+          </p>
+          <h3>{event.title}</h3>
+          <p class="venue">
+            📍
+            <a href={event.mapsUrl} target="_blank" rel="noopener noreferrer">
+              {event.venue}
+            </a>
+          </p>
+          <p class="desc">{event.description}</p>
+          {event.signupUrl && (
+            <a
+              class="btn btn-cta signup"
+              href={event.signupUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              RSVP ↗
+            </a>
+          )}
+        </div>
+        {event.image && (
+          <img
+            class="photo"
+            src={`${base}/${event.image}`}
+            alt={event.title}
+            loading="lazy"
+            width="400"
+            height="300"
+          />
+        )}
+      </article>
+    ))
+  }
+</div>
+
+<style>
+  .timeline {
+    position: relative;
+    padding-left: 2.4rem;
+  }
+
+  /* the vertical line, fading through the palette */
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.45rem;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    width: 2px;
+    background: linear-gradient(var(--brand), var(--accent), var(--pop));
+    opacity: 0.4;
+  }
+
+  .event {
+    position: relative;
+    padding-bottom: 3rem;
+  }
+
+  .event:last-child {
+    padding-bottom: 0.5rem;
+  }
+
+  /* with a photo: text left, photo on the right side (stacks on small screens) */
+  .event.has-photo {
+    display: grid;
+    grid-template-columns: 1fr minmax(14rem, 22rem);
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  @media (max-width: 48rem) {
+    .event.has-photo {
+      grid-template-columns: 1fr; /* photo drops below the text */
+      gap: 1.25rem;
+    }
+  }
+
+  /* the dot on the line, glowing in the event's tint */
+  .event::before {
+    content: '';
+    position: absolute;
+    left: -2.4rem;
+    top: 0.3rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--tint);
+    box-shadow: 0 0 10px -2px var(--tint);
+  }
+
+  .photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover; /* crops any photo shape to a tidy 4:3 */
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    rotate: 1.5deg; /* playful tilt; straightens on hover (same as About) */
+    transition: rotate 0.25s ease;
+  }
+
+  .photo:hover {
+    rotate: 0deg;
+  }
+
+  .date {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--tint);
+    margin-bottom: 0.3rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .venue {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .venue a {
+    color: var(--ink-soft);
+    text-underline-offset: 0.25em;
+    transition: color 0.15s ease;
+  }
+
+  .venue a:hover {
+    color: var(--accent);
+  }
+
+  .desc {
+    max-width: 38rem;
+    margin-bottom: 1.1rem;
+  }
+
+  /* slightly smaller button than the hero's */
+  .signup {
+    padding: 0.55rem 1.2rem;
+    font-size: 0.95rem;
+  }
+</style>

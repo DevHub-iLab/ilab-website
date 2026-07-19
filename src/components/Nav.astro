@@ -1,0 +1,162 @@
+---
+// Navigation, shown on every page. Bare monospace text links everywhere:
+// portrait / narrow screens get a minimal strip across the top,
+// landscape gets the links floating in the left margin.
+// The section currently in view is highlighted — see the scrollspy below.
+import { base } from '../utils.js';
+import ilab from '../icons/favicon.svg?raw';
+
+// Single-page site: these jump to sections on the homepage.
+// "Home" only shows in the landscape rail (the logo covers it in portrait).
+const links = [
+  { label: 'Home', href: `${base}/#home`, id: 'home', homeOnly: true },
+  { label: 'Pillars', href: `${base}/#pillars`, id: 'pillars' },
+  { label: 'About', href: `${base}/#about`, id: 'about' },
+  { label: 'Team', href: `${base}/#team`, id: 'team' },
+  { label: 'Events', href: `${base}/#events`, id: 'events' },
+  { label: 'Contact', href: `${base}/#contact`, id: 'contact' },
+];
+---
+
+<header>
+  <nav>
+    <a class="logo" href={`${base}/`} aria-label="Innovation Lab — home">
+      <div class="nav-logo" set:html={ilab} />
+    </a>
+    <ul>
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              data-spy={link.id}
+              class:list={[{ 'home-link': link.homeOnly }]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
+<script>
+  // Scrollspy: colour the link whose section is currently mid-viewport.
+  const links = new Map(
+    [...document.querySelectorAll('nav a[data-spy]')].map((a) => [
+      (a as HTMLElement).dataset.spy,
+      a,
+    ])
+  );
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        links.forEach((a) => a.classList.remove('active'));
+        links.get(entry.target.id)?.classList.add('active');
+      }
+    },
+    // a thin horizontal band around the middle of the viewport
+    { rootMargin: '-45% 0px -50% 0px' }
+  );
+
+  links.forEach((_a, id) => {
+    const section = document.getElementById(id ?? '');
+    if (section) observer.observe(section);
+  });
+</script>
+
+<style>
+  /* ----- shared: quiet monospace text links, current section in coral ----- */
+  ul {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    list-style: none;
+  }
+
+  ul a {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  ul a:hover {
+    color: var(--ink);
+  }
+
+  ul a.active {
+    color: var(--pop);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    height: 1.5rem;
+    width: auto;
+  }
+
+  /* ----- portrait / narrow: minimal strip across the top ----- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    /* no box — just enough blur to keep the text readable while scrolling */
+    background: rgb(24 24 27 / 0.65);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 1.4rem;
+  }
+
+  .home-link {
+    display: none; /* the logo is "home" in the top strip */
+  }
+
+  /* ----- landscape: links float in the left margin, no bar at all ----- */
+  @media (orientation: landscape) {
+    header {
+      position: fixed;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 9rem;
+      background: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    nav {
+      display: block;
+      padding: 0;
+    }
+
+    .logo {
+      display: none;
+    }
+
+    .home-link {
+      display: block;
+    }
+
+    ul {
+      flex-direction: column;
+      align-items: flex-end; /* right-aligned, like a margin note */
+      gap: 1.6rem;
+    }
+
+    ul a {
+      font-size: 0.95rem;
+    }
+  }
+</style>

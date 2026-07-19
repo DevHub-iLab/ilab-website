@@ -1,0 +1,185 @@
+---
+// The four pillars as a bento grid: asymmetric boxes, everything visible, no JS.
+// Content comes from src/data/site.js — edit there, not here.
+import { pillars } from '../data/site';
+
+// Icons live as plain .svg files in src/icons/ — `?raw` imports them as
+// strings so they're inlined and can be tinted via currentColor.
+// Add a file + an entry here if you add a pillar.
+import devhub from '../icons/devhub.svg?raw';
+import handshake from '../icons/handshake.svg?raw';
+import mic from '../icons/mic.svg?raw';
+import rocket from '../icons/rocket.svg?raw';
+
+const icons = { devhub, handshake, mic, rocket };
+---
+
+<div class="bento">
+  {
+    pillars.map((pillar) => (
+      <article
+        class="box"
+        id={pillar.name.toLowerCase()}
+        style={`--tint: ${pillar.tint}`}
+      >
+        <div class="icon" set:html={icons[pillar.icon as keyof typeof icons]} />
+        <h3>
+          {pillar.url ? (
+            <a href={pillar.url} target="_blank" rel="noopener noreferrer">
+              {pillar.name}
+              <span class="ext" aria-hidden="true">↗</span>
+            </a>
+          ) : (
+            pillar.name
+          )}
+        </h3>
+        <p class="tagline">{pillar.tagline}</p>
+      </article>
+    ))
+  }
+</div>
+
+<script>
+  // Highlight logic: a box lights up when clicked directly or via any
+  // #anchor link pointing at it (e.g. the hero terminal). Clicking
+  // anywhere else clears the highlight.
+  const boxes = [...document.querySelectorAll('.bento .box')] as HTMLElement[];
+
+  function light(id: string | null) {
+    boxes.forEach((box) => box.classList.toggle('lit', box.id === id));
+  }
+
+  document.addEventListener('click', (event) => {
+    const target = event.target as Element;
+
+    // clicked on (or inside) a box → highlight that box
+    const box = target.closest('.bento .box');
+    if (box) return light(box.id);
+
+    // clicked a link that names a pillar (data-pillar, e.g. in the hero
+    // terminal) or points straight at a box's #anchor → highlight it
+    const anchor = target.closest('a') as HTMLAnchorElement | null;
+    const id =
+      anchor?.dataset.pillar ??
+      anchor?.getAttribute('href')?.split('#')[1] ??
+      null;
+    if (id && boxes.some((b) => b.id === id)) return light(id);
+
+    // clicked anywhere else → clear
+    light(null);
+  });
+
+  // arriving with a hash in the URL (e.g. a shared link to /#devhub)
+  const initial = location.hash.slice(1);
+  if (boxes.some((b) => b.id === initial)) light(initial);
+</script>
+
+<style>
+  /* Asymmetric bento: wide-narrow on row one, narrow-wide on row two.
+     Boxes are placed in data order (DevHub, Catalyst, TechTalks, Entrepreneurship). */
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.25rem;
+  }
+
+  .box:nth-child(1) { grid-column: span 3; }
+  .box:nth-child(2) { grid-column: span 2; }
+  .box:nth-child(3) { grid-column: span 2; }
+  .box:nth-child(4) { grid-column: span 3; }
+
+  @media (max-width: 60rem) {
+    .bento {
+      grid-template-columns: repeat(2, 1fr); /* even 2×2 on tablet */
+    }
+    .box:nth-child(n) { grid-column: auto; }
+  }
+
+  @media (max-width: 36rem) {
+    .bento {
+      grid-template-columns: 1fr; /* single column on mobile */
+    }
+  }
+
+  .box {
+    position: relative;
+    scroll-margin-top: 5rem; /* breathing room when jumped to from the terminal */
+    overflow: hidden; /* keeps the corner glow inside the rounded box */
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: calc(var(--radius) * 1.25);
+    padding: 1.9rem;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  /* soft glow in each box's own tint, tucked into the top-right corner */
+  .box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      18rem 11rem at 100% 0%,
+      color-mix(in srgb, var(--tint) 14%, transparent),
+      transparent
+    );
+    pointer-events: none;
+  }
+
+  /* no lift — the outline lights up in the box's own tint instead.
+     .lit = selected via the hero terminal, a #anchor link, or a direct click */
+  .box:hover,
+  .box.lit {
+    border-color: var(--tint);
+    box-shadow:
+      0 0 18px -4px color-mix(in srgb, var(--tint) 55%, transparent),
+      inset 0 0 12px -8px color-mix(in srgb, var(--tint) 40%, transparent);
+  }
+
+  .icon {
+    width: 3rem;
+    height: 3rem;
+    padding: 0.65rem;
+    border-radius: 0.85rem;
+    color: var(--tint);
+    background: color-mix(in srgb, var(--tint) 18%, transparent);
+    margin-bottom: 1rem;
+    transition: transform 0.2s ease;
+  }
+
+  .box:hover .icon {
+    transform: scale(1.08) rotate(-4deg);
+  }
+
+  /* injected SVGs aren't style-scoped; make them fill the chip regardless
+     of any width/height baked into the .svg file */
+  .icon :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+  }
+
+  h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  h3 a:hover {
+    color: var(--tint);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  .ext {
+    font-size: 0.7em;
+    margin-left: 0.25em;
+    color: var(--tint);
+  }
+
+  .tagline {
+    color: var(--ink-soft);
+  }
+</style>

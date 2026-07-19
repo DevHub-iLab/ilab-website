@@ -1,0 +1,37 @@
+---
+// Shared page shell: <head>, nav, footer. Every page wraps itself in this.
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+import { base } from '../utils.js';
+import '../styles/global.css';
+
+// Each page passes its own title + description for the browser tab / SEO.
+const { title, description = site.intro } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#18181B" />
+    <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+    <!-- Font: Space Grotesk from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title} · {site.fullName}</title>
+  </head>
+  <body>
+    <Nav />
+    <main>
+      <slot /><!-- each page's content is injected here -->
+    </main>
+    <Footer />
+  </body>
+</html>

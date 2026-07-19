@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <!-- Placeholder — replace this file with a real club photo (see README) -->
+  <defs>
+    <radialGradient id="p" cx="0.2" cy="0.1" r="0.8">
+      <stop offset="0" stop-color="#8B5CF6" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#8B5CF6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="c" cx="0.9" cy="0.9" r="0.9">
+      <stop offset="0" stop-color="#22D3EE" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="600" fill="#202027"/>
+  <rect width="800" height="600" fill="url(#p)"/>
+  <rect width="800" height="600" fill="url(#c)"/>
+  <rect x="24" y="24" width="752" height="552" rx="20" fill="none" stroke="#52525b" stroke-width="3" stroke-dasharray="14 12"/>
+  <!-- simple photo glyph -->
+  <g transform="translate(340 210)" stroke="#a1a1aa" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="0" y="0" width="120" height="96" rx="12"/>
+    <circle cx="38" cy="34" r="12"/>
+    <path d="M6 88 44 54l28 24 20-16 22 26"/>
+  </g>
+  <text x="400" y="380" text-anchor="middle" font-family="Menlo, monospace" font-size="26" fill="#a1a1aa">// club photo goes here</text>
+  <text x="400" y="418" text-anchor="middle" font-family="Menlo, monospace" font-size="19" fill="#52525b">replace public/images/about.svg</text>
+</svg>

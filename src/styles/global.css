@@ -1,0 +1,127 @@
+/* -----------------------------------------------------------
+   Global styles: colours, font, and a few shared helpers.
+   Component-specific styles live inside each .astro file.
+   ----------------------------------------------------------- */
+
+:root {
+  /* Palette: "Electric playground", dark mode — change these to re-theme the whole site */
+  --brand: #8b5cf6; /* purple base */
+  --accent: #22d3ee; /* bright cyan */
+  --pop: #fb7185; /* coral, used sparingly for punch */
+  --ink: #fafafa; /* near-white for headings */
+  --ink-soft: #a1a1aa; /* body text */
+  --bg: #18181b; /* page background */
+  --bg-soft: #1f1f23; /* slightly lifted section background */
+  --bg-deep: #101013; /* darkest: footer, terminal window */
+  --surface: #202027; /* cards and panels */
+  --line: #2b2b31; /* hairline borders */
+  --ink-mid: #d4d4d8; /* between --ink and --ink-soft: terminal text, footer */
+
+  --radius: 1rem; /* the "rounded corners everywhere" dial */
+  --shadow: 0 10px 30px -10px rgb(0 0 0 / 0.55);
+  --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+html {
+  color-scheme: dark; /* dark scrollbars + form controls in the browser */
+  scroll-behavior: smooth;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  color: var(--ink-soft);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  color: var(--ink);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); }
+h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); }
+h3 { font-size: 1.2rem; }
+
+a {
+  color: var(--brand);
+}
+
+img, svg {
+  max-width: 100%;
+  display: block;
+}
+
+/* Centred page column */
+.container {
+  width: min(72rem, 100% - 3rem);
+  margin-inline: auto;
+}
+
+/* In landscape the nav is bare text links fixed in the left margin
+   (see Nav.astro). Sections keep their full-bleed backgrounds; only
+   this content column narrows so the links get clear margin space. */
+@media (orientation: landscape) {
+  .container {
+    width: min(72rem, 100% - 20rem);
+  }
+}
+
+section {
+  padding-block: 4.5rem;
+}
+
+/* Small label above a section heading, e.g. "What we do" */
+.eyebrow {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--pop);
+  margin-bottom: 0.5rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid transparent; /* keeps solid + outlined buttons the same height */
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-cta {
+  background: var(--pop);
+  color: #fff;
+}
+
+.btn-cta:hover {
+  box-shadow: 0 8px 20px -8px var(--pop);
+}
+
+/* outlined coral companion to .btn-cta */
+.btn-secondary {
+  border-color: var(--pop);
+  color: var(--pop);
+}
+
+.btn-secondary:hover {
+  background: color-mix(in srgb, var(--pop) 12%, transparent);
+  box-shadow: 0 8px 20px -8px var(--pop);
+}
+

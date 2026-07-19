@@ -1,0 +1,171 @@
+---
+// Mac-style terminal for the hero. The command outputs are real links:
+// `whoami` → About, the pillar names → Pillars
+---
+
+<div class="terminal">
+  <div class="titlebar">
+    <span class="dot red"></span>
+    <span class="dot yellow"></span>
+    <span class="dot green"></span>
+    <span class="title">ilab@ccds — zsh</span>
+  </div>
+  <div class="screen">
+    <p class="line"><span class="prompt">$</span> <span class="cmd">whoami</span></p>
+    <p class="line"><a class="out" href="#about">innovation-lab @ ntu ccds</a></p>
+    <p class="line"><span class="prompt">$</span> <span class="cmd">ls pillars/</span></p>
+    <p class="line">
+      <a class="devhub" href="#pillars" data-pillar="devhub">devhub</a>
+      <a class="catalyst" href="#pillars" data-pillar="catalyst">catalyst</a>
+      <a class="techtalks" href="#pillars" data-pillar="techtalks">techtalks</a>
+      <a class="entrepreneurship" href="#pillars" data-pillar="entrepreneurship">entrepreneurship</a>
+    </p>
+    <p class="line"><span class="prompt">$</span> <span class="cmd">./join.sh</span></p>
+    <p class="line"><a class="out" href="#contact">welcome on board</a></p>
+    <p class="line"><span class="prompt">$</span> <span class="cursor"></span></p>
+  </div>
+</div>
+
+<style>
+  .terminal {
+    width: 100%;
+    max-width: 34rem;
+    margin-inline: auto; /* spacing from the copy comes from the hero grid gap */
+    text-align: left;
+    background: var(--bg-deep);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow:
+      var(--shadow),
+      0 0 40px -12px rgb(139 92 246 / 0.35); /* faint purple halo */
+    overflow: hidden;
+  }
+
+  .titlebar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+  }
+
+  /* the classic mac traffic lights */
+  .red { background: #ff5f57; }
+  .yellow { background: #febc2e; }
+  .green { background: #28c840; }
+
+  .title {
+    margin-inline: auto;
+    /* nudge left so the title looks centred despite the dots */
+    transform: translateX(-1.3rem);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+
+  .screen {
+    padding: 1.25rem 1.4rem 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    line-height: 1.9;
+    color: var(--ink-mid);
+  }
+
+  /* Choreography: commands type themselves; output lines print instantly
+     once the command above them "finishes". If you edit a command, update
+     its character count in steps() and the ch width, plus later delays. */
+  .line {
+    opacity: 0;
+    animation: type-in 0.01s steps(1) forwards;
+  }
+
+  .line:nth-child(1) { animation-delay: 0.4s; }
+  .line:nth-child(2) { animation-delay: 1.2s; }
+  .line:nth-child(3) { animation-delay: 1.6s; }
+  .line:nth-child(4) { animation-delay: 2.8s; }
+  .line:nth-child(5) { animation-delay: 3.3s; }
+  .line:nth-child(6) { animation-delay: 4.3s; }
+  .line:nth-child(7) { animation-delay: 4.7s; }
+
+  @keyframes type-in {
+    to { opacity: 1; }
+  }
+
+  /* the typing effect: width grows one character (1ch) per step */
+  .cmd {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: bottom;
+    width: 0;
+    animation: typing linear forwards;
+  }
+
+  .line:nth-child(1) .cmd { animation-duration: 0.5s; animation-delay: 0.4s; animation-timing-function: steps(6); --w: 6ch; }
+  .line:nth-child(3) .cmd { animation-duration: 0.8s; animation-delay: 1.6s; animation-timing-function: steps(11); --w: 11ch; }
+  .line:nth-child(5) .cmd { animation-duration: 0.7s; animation-delay: 3.3s; animation-timing-function: steps(9); --w: 9ch; }
+
+  @keyframes typing {
+    to { width: var(--w); }
+  }
+
+  .prompt { color: var(--accent); }
+
+  /* output links: dotted underline hints they're clickable */
+  .screen a {
+    color: inherit;
+    text-decoration: underline dotted;
+    text-underline-offset: 0.25em;
+    text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+    transition: filter 0.15s ease;
+  }
+
+  .screen a:hover {
+    text-decoration-style: solid;
+    text-decoration-color: currentColor;
+    filter: brightness(1.3);
+  }
+
+  /* pillar names in their own tints, like `ls` colour output — these mirror
+     the pillar tints in src/data/site.js; keep them in sync if those change
+     (.screen prefix keeps these winning over the generic link colour) */
+  .screen .devhub { color: #fb923c; margin-right: 1.1em; }
+  .screen .catalyst { color: #22d3ee; margin-right: 1.1em; }
+  .screen .techtalks { color: #8b5cf6; margin-right: 1.1em; }
+  .screen .entrepreneurship { color: #d946ef; }
+
+  .cursor {
+    display: inline-block;
+    width: 0.55em;
+    height: 1.05em;
+    vertical-align: text-bottom;
+    background: var(--accent);
+    animation: blink 1.1s steps(1) infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  /* respect users who prefer less motion: show everything immediately */
+  @media (prefers-reduced-motion: reduce) {
+    .line {
+      animation: none;
+      opacity: 1;
+    }
+    .cmd {
+      animation: none;
+      width: auto;
+    }
+    .cursor {
+      animation: none;
+    }
+  }
+</style>

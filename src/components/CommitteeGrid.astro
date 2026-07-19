@@ -1,0 +1,127 @@
+---
+// The committee, shown as a grid of tinted cards.
+// Edit the people in src/data/site.js — not here.
+import { committee, palette } from '../data/site';
+
+// Icons live as plain .svg files in src/icons/
+// `?raw` imports them as strings so they're inlined and can be recoloured via currentColor.
+// Add a file + an entry here to support a new link type.
+import linkedin from '../icons/linkedin.svg?raw';
+import github from '../icons/github.svg?raw';
+import website from '../icons/website.svg?raw';
+
+const icons = { linkedin, github, website };
+
+type IconType = keyof typeof icons;
+---
+
+<div class="team">
+  {
+    committee.map((member, i) => (
+      <div class="member" style={`--tint: ${palette[member.division]}`}>
+        <h3>{member.name}</h3>
+        <p class="role">{member.role}</p>
+        <p class="course">{member.course}</p>
+        {member.bio && <p class="bio">{member.bio}</p>}
+        {member.links && member.links.length > 0 && (
+          <div class="links">
+            {member.links.map((link) => (
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${member.name} on ${link.type}`}
+                set:html={icons[link.type as IconType]}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .team {
+    display: grid;
+    /* as many columns as fit — wraps naturally on smaller screens */
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 1.25rem;
+  }
+
+  .member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.75rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  /* same glowy outline treatment as the pillar boxes */
+  .member:hover {
+    border-color: var(--tint);
+    box-shadow: 0 0 18px -4px color-mix(in srgb, var(--tint) 55%, transparent);
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .role {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--tint);
+  }
+
+  .course {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+
+  .bio {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin-top: 0.6rem;
+  }
+
+  .links {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: auto; /* sits at the card bottom so icon rows line up */
+    padding-top: 0.9rem;
+  }
+
+  /* small round icon buttons: white icon, glows in the member's tint on hover */
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    color: #fff;
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid var(--line);
+    transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease,
+      transform 0.15s ease;
+  }
+
+  .links a:hover {
+    color: var(--tint);
+    border-color: var(--tint);
+    background: color-mix(in srgb, var(--tint) 12%, transparent);
+    transform: translateY(-2px);
+  }
+
+  /* the injected SVGs aren't scoped, so size them via :global */
+  .links a :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+</style>
