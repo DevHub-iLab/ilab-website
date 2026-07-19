@@ -14,7 +14,7 @@ export const site = {
   tagline: 'Where CCDS students go off-script.',
   intro:
     "We're a student-run club in NTU's College of Computing and Data Science. We build, mentor, share, and launch.",
-  email: 'ilabscds@e.ntu.edu.sg',
+  email: 'scds-ilab-club@e.ntu.edu.sg',
   socials: [
     { label: 'Instagram', url: 'https://instagram.com/innovation.lab.ccds/', description: 'Slide into our DMs - we actually reply' },
     { label: 'LinkedIn', url: 'https://www.linkedin.com/company/ccds-innovation-lab/', description: 'Connect with us on LinkedIn' },
