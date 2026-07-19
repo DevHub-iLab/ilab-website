@@ -1,0 +1,15 @@
+[tools]
+node = "26"
+pnpm = "11"
+
+[tasks.dev]
+run = "pnpm dev"
+description = "Start the Astro dev server"
+
+[tasks.build]
+run = "pnpm build"
+description = "Build the site to dist/"
+
+[tasks.preview]
+run = "pnpm preview"
+description = "Preview the production build"
