@@ -111,6 +111,7 @@ export const events: Event[] = [
     description:
     '',
     pillar: 'techtalks',
+    mapsUrl: 'https://maps.ntu.edu.sg/?mazemap_share_url=https%3A%2F%2Fuse.mazemap.com%2F%3Futm_medium%3Dlongurl%23v%3D1%26config%3Dntu-sg%26zlevel%3D3%26center%3D103.682648%2C1.343025%26zoom%3D18%26campusid%3D2123%26sharepoitype%3Didentifier%26sharepoi%3DLHS-03-02',
     // image: 'images/events/welcome-tea.png',
     // signupUrl: 'https://example.com/replace-with-signup-form',
   },
@@ -122,6 +123,7 @@ export const events: Event[] = [
     description:
     '',
     pillar: 'techtalks',
+    mapsUrl: 'https://maps.ntu.edu.sg/?mazemap_share_url=https%3A%2F%2Fuse.mazemap.com%2F%3Futm_medium%3Dlongurl%23v%3D1%26config%3Dntu-sg%26zlevel%3D1%26center%3D103.681899%2C1.347852%26zoom%3D18%26campusid%3D2123%26sharepoitype%3Didentifier%26sharepoi%3DLHN-L1-03',
     // image: 'images/events/welcome-tea.png',
     // signupUrl: 'https://example.com/replace-with-signup-form',
   },
