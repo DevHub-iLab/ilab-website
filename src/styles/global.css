@@ -64,6 +64,7 @@ img, svg {
 .container {
   width: min(72rem, 100% - 3rem);
   margin-inline: auto;
+  padding-inline-start: clamp(1.5rem, 6vw, 6rem);
 }
 
 /* In landscape the nav is bare text links fixed in the left margin
@@ -72,6 +73,7 @@ img, svg {
 @media (orientation: landscape) {
   .container {
     width: min(72rem, 100% - 20rem);
+    padding-inline-start: 0;
   }
 }
 

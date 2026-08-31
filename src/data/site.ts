@@ -104,28 +104,28 @@ type Event = {
 
 export const events: Event[] = [
   {
-    title: 'LLM Security Workshop with CDEFG',
+    title: 'Breaking Your Own Chatbot: A Hands-On Introduction to LLM Security Testing',
     date: 'Mon, 7 Sept 2026',
     time: '18:30 - 21:30',
     venue: 'The Hive - LHS-TR+56',
     description:
-    '',
+    'Join us for the first workshop of the AI Builders Workshop Series, organized by Innovation Lab @ NTU CCDS in collaboration with the Chatbot Developers and Enthusiasts Focus Group (CDEFG). In this workshop, you\'ll learn: The major prompt-injection and jailbreak attack families, live attack demonstrations on a running chatbot, and how to benchmark your own chatbot's resilience with an automated red-teaming tool',
     pillar: 'techtalks',
     mapsUrl: 'https://maps.ntu.edu.sg/?mazemap_share_url=https%3A%2F%2Fuse.mazemap.com%2F%3Futm_medium%3Dlongurl%23v%3D1%26config%3Dntu-sg%26zlevel%3D3%26center%3D103.682648%2C1.343025%26zoom%3D18%26campusid%3D2123%26sharepoitype%3Didentifier%26sharepoi%3DLHS-03-02',
-    // image: 'images/events/welcome-tea.png',
-    // signupUrl: 'https://example.com/replace-with-signup-form',
+    signupUrl: 'https://go.ilabccds.com/ai-builders-workshop-series',
+    image: 'images/sep_2026_cdefg_workshops.jpg',
   },
   {
-    title: 'Introduction to Model Context Protocol Workshop with CDEFG',
+    title: 'Model Context Protocol Workshop: From Concept to Custom Server',
     date: 'Tue, 8 Sept 2026',
     time: '18:30 - 21:30',
     venue: 'The ARC - LHN-TR+15',
     description:
-    '',
+    'Join us for the second workshop of the AI Builders Workshop Series, organized by Innovation Lab @ NTU CCDS in collaboration with the Chatbot Developers and Enthusiasts Focus Group (CDEFG). In this workshop, you\'ll learn MCP architecture (Host, Client, Server), how to build your own custom MCP server in Python/TypeScript, and how to connect and test it live in Claude Desktop / VS Code',
     pillar: 'techtalks',
     mapsUrl: 'https://maps.ntu.edu.sg/?mazemap_share_url=https%3A%2F%2Fuse.mazemap.com%2F%3Futm_medium%3Dlongurl%23v%3D1%26config%3Dntu-sg%26zlevel%3D1%26center%3D103.681899%2C1.347852%26zoom%3D18%26campusid%3D2123%26sharepoitype%3Didentifier%26sharepoi%3DLHN-L1-03',
-    // image: 'images/events/welcome-tea.png',
-    // signupUrl: 'https://example.com/replace-with-signup-form',
+    signupUrl: 'https://go.ilabccds.com/ai-builders-workshop-series',
+    image: 'images/sep_2026_cdefg_workshops.jpg',
   },
 ];
 
