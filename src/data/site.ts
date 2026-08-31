@@ -104,33 +104,21 @@ type Event = {
 
 export const events: Event[] = [
   {
-    title: 'Welcome tea 🍵',
-    date: 'Tue, 18 Aug 2026',
-    time: '18:30 - 20:30',
-    venue: 'Innovation Lab, NTU',
-    description:
-    'Meet the committee, and learn about our structure and events. Free dinner provided.',
-    mapsUrl: ilabMapsUrl,
-    pillar: 'exco',
-    // image: 'images/events/welcome-tea.png',
-    // signupUrl: 'https://example.com/replace-with-signup-form',
-  },
-  {
-    title: 'Workshop 1: Introduction to High Performance Computing & Distributed Computing',
-    date: 'Fri, 21 Aug 2026',
-    time: '18:30 - 21:00',
-    venue: 'The ARC - LHN-TR+32 & LHN-TR+33',
-    description:
-    'Ever wondered how supercomputers actually work, or wanted to run your code on a real CPU cluster instead of just your laptop? Join us for Workshop 1: Introduction to High Performance Computing & Distributed Computing, brought to you by NTU HPC/AI and Innovation Lab @ NTU CCDS!',
-    pillar: 'devhub',
-    // image: 'images/events/welcome-tea.png', 
-    // signupUrl: 'https://example.com/replace-with-signup-form', 
-  },
-  {
     title: 'LLM Security Workshop with CDEFG',
     date: 'Mon, 7 Sept 2026',
     time: '18:30 - 21:30',
     venue: 'The Hive - LHS-TR+56',
+    description:
+    '',
+    pillar: 'techtalks',
+    // image: 'images/events/welcome-tea.png',
+    // signupUrl: 'https://example.com/replace-with-signup-form',
+  },
+  {
+    title: 'Introduction to Model Context Protocol Workshop with CDEFG',
+    date: 'Tue, 8 Sept 2026',
+    time: '18:30 - 21:30',
+    venue: 'The ARC - LHN-TR+15',
     description:
     '',
     pillar: 'techtalks',
