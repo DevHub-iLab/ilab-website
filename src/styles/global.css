@@ -73,7 +73,6 @@ img, svg {
 @media (orientation: landscape) {
   .container {
     width: min(72rem, 100% - 20rem);
-    padding-inline-start: 0;
   }
 }
 
